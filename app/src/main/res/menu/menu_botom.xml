@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title="Menú"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+
+    <item
+        android:id="@+id/categoriasFragment"
+        android:title="Categoria"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+
+
+    <item
+        android:id="@+id/buscarFragment"
+        android:title="Buscar"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+
+
+
+</menu>
