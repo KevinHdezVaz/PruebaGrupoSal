@@ -1,0 +1,37 @@
+<!-- fragment_profile.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bg_next_button" />
+
+    <TextView
+        android:id="@+id/profileNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/profileEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="4dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="Salir de cuenta"
+        android:id="@+id/logout"
+        android:layout_height="wrap_content">
+
+    </Button>
+
+</LinearLayout>

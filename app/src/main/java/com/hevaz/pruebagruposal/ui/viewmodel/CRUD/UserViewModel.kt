@@ -27,7 +27,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
                 emit(Resource.error("Error al obtener datos: ${response.message()}",null))
             }
         } catch (e: Exception) {
-            emit(Resource.error("Error de red: ${e.localizedMessage}", null))  // Emite un error con un mensaje
+            emit(Resource.error("Error de red: ${e.localizedMessage}", null))
         }
     }
 

@@ -25,7 +25,7 @@ import com.hevaz.pruebagruposal.ui.viewmodel.CRUD.UserViewModel
 import com.hevaz.pruebagruposal.ui.viewmodel.CRUD.UserViewModelFactory
 import com.hevaz.pruebagruposal.ui.viewmodel.Registro.AuthViewModel
 import com.hevaz.pruebagruposal.utils.Resource
-import com.hevaz.pruebagruposal.utils.StickyHeaderItemDecoration
+import com.hevaz.pruebagruposal.utils.StickeyHeaderItemDecoration
 import com.hevaz.pruebagruposal.utils.animacionProgress
 import com.hevaz.pruebagruposal.utils.getUserName
 import com.hevaz.pruebagruposal.utils.saveAuthToken
@@ -75,7 +75,7 @@ class HomeScreen : Fragment() {
             adapter = userAdapter
             layoutManager = LinearLayoutManager(context)
             if (itemDecorationCount == 0) {
-                val headerDecoration = StickyHeaderItemDecoration(context) { position ->
+                val headerDecoration = StickeyHeaderItemDecoration(context) { position ->
                     userAdapter.getHeaderForPosition(position)
                 }
                 addItemDecoration(headerDecoration)
@@ -90,7 +90,7 @@ class HomeScreen : Fragment() {
                 Resource.Status.SUCCESS -> {
                     animacionProgress.esconderCarga()
                     resource.data?.data?.let { users ->
-                        val sortedUsers = users.sortedBy { it.first_name }  // Ordenar por nombre
+                        val sortedUsers = users.sortedBy { it.first_name }
                         userAdapter.submitList(sortedUsers)
                     }
                 }

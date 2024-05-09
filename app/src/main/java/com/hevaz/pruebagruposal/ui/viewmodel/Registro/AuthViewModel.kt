@@ -14,7 +14,7 @@ class AuthViewModel : ViewModel() {
             val response = AuthRepository.registerUser(email, password)
             emitSource(response)
         } catch (e: Exception) {
-            emit(Resource.error("Error de registro: ${e.localizedMessage}", null))  // Emite un error con un mensaje
+            emit(Resource.error("Error de registro: ${e.localizedMessage}", null))
         }
     }
 
@@ -24,7 +24,7 @@ class AuthViewModel : ViewModel() {
             val response = AuthRepository.loginUser(email, password)
             emitSource(response)
         } catch (e: Exception) {
-            emit(Resource.error("Error de registro: ${e.localizedMessage}", null))  // Emite un error con un mensaje
+            emit(Resource.error("Error de registro: ${e.localizedMessage}", null))
         }
     }
 }
