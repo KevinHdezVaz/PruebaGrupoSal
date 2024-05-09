@@ -62,6 +62,9 @@ class InicioSesionActivity : AppCompatActivity() {
                 R.id.registerFragment -> {
                     binding.bottomBar.hide()
                 }
+                R.id.userDetailsFragment -> {
+                    binding.bottomBar.hide()
+                }
 
                 R.id.homeScreen -> {
                     binding.bottomBar.show()

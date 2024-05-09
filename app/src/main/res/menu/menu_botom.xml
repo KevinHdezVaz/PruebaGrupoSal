@@ -8,17 +8,17 @@
         android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
 
     <item
-        android:id="@+id/categoriasFragment"
-        android:title="Categoria"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
-
-
-    <item
         android:id="@+id/buscarFragment"
         android:title="Buscar"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_keyboard_arrow_right_24"/>
+        android:icon="@drawable/baseline_search_24"/>
+    <item
+        android:id="@+id/profileFragment"
+        android:title="Perfil"
+        android:enabled="true"
+        android:icon="@drawable/baseline_search_24"/>
+
+
 
 
 

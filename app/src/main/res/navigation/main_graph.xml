@@ -54,11 +54,43 @@
             android:id="@+id/action_introFragment2_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+
+
     <fragment
         android:id="@+id/homeScreen"
         android:name="com.hevaz.pruebagruposal.ui.view.CRUD.HomeScreen"
-        android:label="fragment_home_screen"
-        tools:layout="@layout/fragment_home_screen" />
+        android:label="Home">
+        <action
+            android:id="@+id/action_homeScreen_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.hevaz.pruebagruposal.ui.view.Profile.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.hevaz.pruebagruposal.ui.view.CRUD.UserDetailsFragment"
+        android:label="UserDetailsFragment">
+
+    <argument
+        android:name="userId"
+        app:argType="integer" />
+
+
+    </fragment>
+
 
 
 </navigation>

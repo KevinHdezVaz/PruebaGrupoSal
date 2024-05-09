@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
  import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
  import androidx.lifecycle.liveData
+ import com.hevaz.pruebagruposal.data.model.CRUD.UserDetail
  import com.hevaz.pruebagruposal.data.repository.AuthRepository
  import com.hevaz.pruebagruposal.data.repository.UserRepository
  import com.hevaz.pruebagruposal.network.RetrofitClient.apiService
@@ -17,11 +18,11 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     fun getUsers(page: Int) = liveData {
-        emit(Resource.loading(null)) // Indicar que la carga ha comenzado
+        emit(Resource.loading(null))
         try {
             val response = apiService.getUsers(page)
             if (response.isSuccessful && response.body() != null) {
-                emit(Resource.success(response.body())) // Asegúrate de que el tipo de response.body() es UserListResponse
+                emit(Resource.success(response.body()))
             } else {
                 emit(Resource.error("Error al obtener datos: ${response.message()}",null))
             }
@@ -30,6 +31,13 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
+    fun getUserDetails(userId: Int): LiveData<Resource<UserDetail>> {
+        val result = MutableLiveData<Resource<UserDetail>>()
+        viewModelScope.launch {
+            result.value = userRepository.getUserDetails(userId)
+        }
+        return result
+    }
 
 
 }

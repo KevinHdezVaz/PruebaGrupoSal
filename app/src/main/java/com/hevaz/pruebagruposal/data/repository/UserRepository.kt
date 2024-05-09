@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.hevaz.pruebagruposal.data.local.DAO.UserDao
 import com.hevaz.pruebagruposal.data.local.User
 import com.hevaz.pruebagruposal.data.model.Auth.ApiError
- import com.hevaz.pruebagruposal.data.model.CRUD.UserListResponse
+import com.hevaz.pruebagruposal.data.model.CRUD.UserDetail
+import com.hevaz.pruebagruposal.data.model.CRUD.UserListResponse
  import com.hevaz.pruebagruposal.network.ApiService
 import com.hevaz.pruebagruposal.network.RetrofitClient
 import com.hevaz.pruebagruposal.utils.Resource
@@ -24,7 +25,7 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             val response = apiService.getUsers(page)
             if (response.isSuccessful) {
                 response.body()?.data?.let { users ->
-                    userDao.insertAll(users) // Guardar en la base de datos local
+                    userDao.insertAll(users)
                 }
             } else {
                 result.postValue(Resource.error("Error: ${response.message()}", null))
@@ -40,6 +41,20 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             result.value = Resource.success(users)
         }
         return result
+    }
+
+    suspend fun getUserDetails(userId: Int): Resource<UserDetail> {
+        return try {
+            val response = apiService.getUserById(userId)
+            if (response.isSuccessful) {
+                response.body()?.data?.let { return Resource.success(it) }
+                Resource.error("No user found", null)
+            } else {
+                Resource.error("Error fetching user: ${response.message()}", null)
+            }
+        } catch (e: Exception) {
+            Resource.error("Error fetching user: ${e.message}", null)
+        }
     }
 }
 

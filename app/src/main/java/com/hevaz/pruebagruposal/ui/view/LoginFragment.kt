@@ -17,6 +17,7 @@ import com.hevaz.pruebagruposal.utils.animacionProgress
 import com.hevaz.pruebagruposal.utils.getAuthToken
 import com.hevaz.pruebagruposal.utils.hideKeyboard
 import com.hevaz.pruebagruposal.utils.saveAuthToken
+import com.hevaz.pruebagruposal.utils.saveName
 
 
 class LoginFragment : Fragment() {
@@ -117,6 +118,9 @@ class LoginFragment : Fragment() {
                     //guardar token
                     result.data?.token?.let {
                         requireContext().saveAuthToken(it)
+                        requireContext().saveName(email)
+
+
                         Toast.makeText(
                             requireContext(),
                             " Token guardado: ${it}",
