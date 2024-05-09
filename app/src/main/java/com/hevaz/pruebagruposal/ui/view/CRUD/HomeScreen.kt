@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hevaz.pruebagruposal.R
+import com.hevaz.pruebagruposal.data.local.AppDatabase
 import com.hevaz.pruebagruposal.data.repository.UserRepository
 import com.hevaz.pruebagruposal.databinding.FragmentHomeScreenBinding
 import com.hevaz.pruebagruposal.databinding.FragmentLoginBinding
@@ -25,8 +26,11 @@ class HomeScreen : Fragment() {
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = _binding!!
     private val viewModel: UserViewModel by viewModels {
-        UserViewModelFactory(UserRepository(RetrofitClient.apiService))
+        val dao = AppDatabase.getDatabase(requireContext()).userDao()
+        UserViewModelFactory(RetrofitClient.apiService, dao)
     }
+
+
     private lateinit var userAdapter: UserAdapter
 
     override fun onCreateView(
@@ -52,17 +56,18 @@ class HomeScreen : Fragment() {
         }
     }
 
+
     private fun observeViewModel() {
         viewModel.getUsers(1).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     animacionProgress.esconderCarga()
-
-                    userAdapter.submitList(resource.data?.data)
+                    if (resource.data != null) {
+                        userAdapter.submitList(resource.data.data) // Asegúrate de que esto es accesible y correcto.
+                    }
                 }
                 Resource.Status.ERROR -> {
                     animacionProgress.esconderCarga()
-
                     Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
                 }
                 Resource.Status.LOADING -> {
@@ -70,7 +75,9 @@ class HomeScreen : Fragment() {
                 }
             }
         }
+
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

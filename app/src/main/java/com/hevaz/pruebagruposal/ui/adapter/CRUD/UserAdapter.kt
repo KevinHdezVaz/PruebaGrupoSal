@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
  import com.hevaz.pruebagruposal.R
-import com.hevaz.pruebagruposal.data.model.CRUD.User
-import com.hevaz.pruebagruposal.databinding.ItemUserBinding
+import com.hevaz.pruebagruposal.data.local.User
+ import com.hevaz.pruebagruposal.databinding.ItemUserBinding
 import com.hevaz.pruebagruposal.utils.UserDiffCallback
 import com.squareup.picasso.Picasso
 

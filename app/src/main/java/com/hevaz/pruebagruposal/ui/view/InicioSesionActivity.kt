@@ -8,8 +8,13 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.room.Room
 import com.hevaz.pruebagruposal.R
+import com.hevaz.pruebagruposal.data.local.AppDatabase
+import com.hevaz.pruebagruposal.data.local.di.DatabaseManager
+import com.hevaz.pruebagruposal.data.repository.UserRepository
 import com.hevaz.pruebagruposal.databinding.ActivityMainBinding
+import com.hevaz.pruebagruposal.network.RetrofitClient
 import com.hevaz.pruebagruposal.utils.getAuthToken
 import com.hevaz.pruebagruposal.utils.hide
 import com.hevaz.pruebagruposal.utils.show
@@ -23,6 +28,7 @@ class InicioSesionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
