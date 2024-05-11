@@ -1,9 +1,7 @@
 package com.hevaz.pruebagruposal.ui.adapter.CRUD
 
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -19,15 +17,14 @@ import com.hevaz.pruebagruposal.databinding.ItemUserBinding
 import com.hevaz.pruebagruposal.utils.UserDiffCallback
 import com.squareup.picasso.Picasso
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import java.util.Locale
 
 class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffCallback()), Filterable {
     var onUserClicked: ((Int) -> Unit)? = null
     var onEdit: ((User) -> Unit)? = null
     var onDelete: ((User) -> Unit)? = null
 
-     private var userList: List<User> = currentList.toList()  // Utilizar una copia de la lista actual para el filtro
-
-
+    private var userList: List<User> = currentList.toList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -58,28 +55,34 @@ class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffCallba
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList = if (constraint.isNullOrBlank()) {
-                    currentList
+                    userList
                 } else {
-                    val filterPattern = constraint.toString().toLowerCase().trim()
-                    currentList.filter {
-                        it.first_name.toLowerCase().contains(filterPattern) ||
-                                it.last_name.toLowerCase().contains(filterPattern)
+                    val filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim()
+                    userList.filter {
+                        it.first_name.toLowerCase(Locale.getDefault()).contains(filterPattern) ||
+                                it.last_name.toLowerCase(Locale.getDefault()).contains(filterPattern)
                     }
                 }
                 return FilterResults().apply { values = filteredList }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                results?.values?.let {
+                results?.values?.also {
                     @Suppress("UNCHECKED_CAST")
-                    submitList(it as List<User>)
+                    val list = it as List<User>
+                    submitList(list) {
+                        notifyDataSetChanged()  // Forzar la actualización del RecyclerView
+                    }
                 }
             }
+
         }
     }
+
     fun getHeaderForPosition(position: Int): String {
         return getItem(position).first_name.substring(0, 1).toUpperCase()
     }
+
     val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             return false
@@ -88,6 +91,7 @@ class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffCallba
         override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
             return 0.1f
         }
+
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.adapterPosition
             if (direction == ItemTouchHelper.RIGHT) {

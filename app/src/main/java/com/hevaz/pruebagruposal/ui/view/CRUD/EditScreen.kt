@@ -75,7 +75,7 @@ class EditScreen : Fragment() {
             )
             viewModel.updateUser(updatedUser)
             Toast.makeText(context, "Datos actualizados correctamente", Toast.LENGTH_SHORT).show()
-         //   findNavController().popBackStack()  // Regresa al fragmento anterior tras guardar los cambios
+         findNavController().popBackStack()  // Regresa al fragmento anterior tras guardar los cambios
         }
 
         binding.btnCancel.setOnClickListener {

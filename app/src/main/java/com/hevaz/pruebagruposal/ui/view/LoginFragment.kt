@@ -124,18 +124,9 @@ class LoginFragment : Fragment() {
                         requireContext().saveName(email)
 
 
-                        Toast.makeText(
-                            requireContext(),
-                            " Token guardado: ${it}",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                      findNavController().navigate(R.id.action_loginFragment_to_homeScreen)
-                    Toast.makeText(
-                        requireContext(),
-                        "Login Successful! Token: ${result.data?.token}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
 
 
                 }

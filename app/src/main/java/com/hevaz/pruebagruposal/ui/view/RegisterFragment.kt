@@ -92,22 +92,13 @@ class RegisterFragment : Fragment() {
                 Resource.Status.SUCCESS -> {
                      esconderCarga()
                    findNavController().navigate(R.id.action_registerFragment_to_homeScreen)
-                    Toast.makeText(
-                        requireContext(),
-                        "Registration Successful! Token: ${result.data?.token}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+
 
                     result.data?.token?.let {
                         requireContext().saveAuthToken(it)
                         requireContext().saveName(email)
 
 
-                        Toast.makeText(
-                            requireContext(),
-                            " Token guardado: ${it}",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
 
                 }
