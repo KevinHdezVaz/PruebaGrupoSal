@@ -74,6 +74,9 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             Resource.error("Update failed: ${e.message}", null)
         }
     }
+    fun getAllUsers(): LiveData<List<User>> = userDao.getAllUsers()
+
+    fun getUsersByName(name: String): LiveData<List<User>> = userDao.getUsersByName(name)
 
     suspend fun deleteUser(user: User): Resource<User> = withContext(Dispatchers.IO) {
         try {

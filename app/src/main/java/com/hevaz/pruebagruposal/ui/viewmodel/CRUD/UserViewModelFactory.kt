@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.hevaz.pruebagruposal.data.local.DAO.UserDao
 import com.hevaz.pruebagruposal.data.repository.UserRepository
 import com.hevaz.pruebagruposal.network.ApiService
-
 class UserViewModelFactory(
     private val apiService: ApiService,
     private val userDao: UserDao

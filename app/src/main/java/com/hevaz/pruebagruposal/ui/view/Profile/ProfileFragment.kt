@@ -41,8 +41,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        displayUserInfo()
-
       binding.logout.setOnClickListener {
           context?.clearAuthToken()
           context?.clearName()
@@ -51,17 +49,7 @@ class ProfileFragment : Fragment() {
 
       }
     }
-    private fun displayUserInfo() {
-        val prefs = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val email = prefs.getString("email", "No email")
-        val firstName = prefs.getString("first_name", "No name")
-        val lastName = prefs.getString("last_name", "No last name")
 
-        binding.profileNameTextView.text = "$firstName $lastName"
-        binding.profileEmailTextView.text = email
-
-
-    }
 
 
 

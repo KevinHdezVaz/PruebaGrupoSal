@@ -19,6 +19,11 @@ interface UserDao {
     fun insertAll(users: List<User>)
 
 
+
+    @Query("SELECT * FROM users WHERE first_name LIKE :name OR last_name LIKE :name")
+    fun getUsersByName(name: String): LiveData<List<User>>
+
+
     @Update
     fun updateUser(user: User)
 

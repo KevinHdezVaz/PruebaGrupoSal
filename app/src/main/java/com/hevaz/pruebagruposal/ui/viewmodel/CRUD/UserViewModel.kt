@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
  import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
  import androidx.lifecycle.liveData
+ import com.hevaz.pruebagruposal.data.local.DAO.UserDao
  import com.hevaz.pruebagruposal.data.local.User
  import com.hevaz.pruebagruposal.data.model.CRUD.UserDetail
  import com.hevaz.pruebagruposal.data.repository.AuthRepository
@@ -18,27 +19,21 @@ import kotlinx.coroutines.launch
  import com.hevaz.pruebagruposal.utils.Resource
 
 
-class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+class UserViewModel(private val userRepository: UserRepository ) : ViewModel() {
 
     private val _userData = MutableLiveData<Resource<User>>()
     val userData: LiveData<Resource<User>> = _userData
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
 
-    private val _filteredUsers = MediatorLiveData<List<User>>()
-    val filteredUsers: LiveData<List<User>> = _filteredUsers
-    private val _searchQuery = MutableLiveData<String>()
+    var allUsers: LiveData<List<User>> = userRepository.getAllUsers()
 
-    init {
-        _filteredUsers.addSource(users) { filterUsers(_searchQuery.value ?: "") }
-    }
     fun filterUsers(query: String) {
-        _searchQuery.value = query
-        val filteredList = users.value?.filter {
-            it.first_name.contains(query, ignoreCase = true) ||
-                    it.last_name.contains(query, ignoreCase = true)
+        allUsers = if (query.isEmpty()) {
+            userRepository.getAllUsers()
+        } else {
+            userRepository.getUsersByName(query)
         }
-        _filteredUsers.postValue(filteredList ?: emptyList())
     }
     fun fetchUsers(page: Int): LiveData<Resource<List<User>>> = liveData(Dispatchers.IO) {
         emit(Resource.loading())

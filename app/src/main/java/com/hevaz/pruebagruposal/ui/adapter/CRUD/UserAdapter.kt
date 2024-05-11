@@ -25,11 +25,9 @@ class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffCallba
     var onEdit: ((User) -> Unit)? = null
     var onDelete: ((User) -> Unit)? = null
 
-    private var userList: List<User> = listOf()
+     private var userList: List<User> = currentList.toList()  // Utilizar una copia de la lista actual para el filtro
 
-    init {
-        userList = currentList
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -60,10 +58,10 @@ class UserAdapter : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffCallba
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredList = if (constraint.isNullOrBlank()) {
-                    userList
+                    currentList
                 } else {
                     val filterPattern = constraint.toString().toLowerCase().trim()
-                    userList.filter {
+                    currentList.filter {
                         it.first_name.toLowerCase().contains(filterPattern) ||
                                 it.last_name.toLowerCase().contains(filterPattern)
                     }
