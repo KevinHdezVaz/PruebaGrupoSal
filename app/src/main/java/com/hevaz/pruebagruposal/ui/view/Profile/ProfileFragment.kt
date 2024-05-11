@@ -40,8 +40,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        displayUserInfo()
 
+        displayUserInfo()
 
       binding.logout.setOnClickListener {
           context?.clearAuthToken()
@@ -51,21 +51,24 @@ class ProfileFragment : Fragment() {
 
       }
     }
-
     private fun displayUserInfo() {
-         val user = fetchLoggedInUser()
-        //binding.profileNameTextView.text = "${user.firstName} ${user.lastName}"
-        binding.profileEmailTextView.text = user.email
-         Picasso.get().load(user.avatar).into(binding.profileImageView)
+        val prefs = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val email = prefs.getString("email", "No email")
+        val firstName = prefs.getString("first_name", "No name")
+        val lastName = prefs.getString("last_name", "No last name")
+
+        binding.profileNameTextView.text = "$firstName $lastName"
+        binding.profileEmailTextView.text = email
+
+
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun fetchLoggedInUser(): User {
-        // Aquí deberías obtener los datos del usuario logueado
-        return User(1, "Doe", "johndoe@example.com", "sdfasdfa","asdfasd")
-    }
+
 }

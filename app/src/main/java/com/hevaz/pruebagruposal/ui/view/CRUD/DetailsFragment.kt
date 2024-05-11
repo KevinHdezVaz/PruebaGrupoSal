@@ -4,6 +4,7 @@ import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.hevaz.pruebagruposal.data.local.AppDatabase
 import com.hevaz.pruebagruposal.databinding.FragmentDetailsBinding
 import com.hevaz.pruebagruposal.network.RetrofitClient
@@ -25,7 +28,7 @@ import com.hevaz.pruebagruposal.utils.animacionProgress
 import com.squareup.picasso.Picasso
 
 
-class UserDetailsFragment : Fragment() {
+class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -35,7 +38,7 @@ class UserDetailsFragment : Fragment() {
         UserViewModelFactory(apiService, dao)
     }
 
-    private val args: UserDetailsFragmentArgs by navArgs()
+    private val args: DetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +52,20 @@ class UserDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeUserDetails()
 
+        setupToolbar()
 
+
+    }
+
+    private fun setupToolbar() {
+        val toolbar = binding.toolbar
+        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+        toolbar.setTitle("Detalles")
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp() // Navegar hacia atrás
+        }
     }
 
 

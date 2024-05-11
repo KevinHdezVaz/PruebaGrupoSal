@@ -1,5 +1,6 @@
 package com.hevaz.pruebagruposal.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,19 +27,18 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             if (response.isSuccessful) {
                 response.body()?.data?.let { users ->
                     userDao.insertAll(users)
+
+                    result.postValue(Resource.success(users))
                 }
             } else {
                 result.postValue(Resource.error("Error: ${response.message()}", null))
-                return result
             }
         } catch (e: Exception) {
-            result.postValue(Resource.error("Network error: ${e.localizedMessage}", null))
-            return result
+
         }
 
-        // Observa los usuarios de la base de datos y actualiza los datos en vivo
         result.addSource(userDao.getAllUsers()) { users ->
-            result.value = Resource.success(users)
+            result.postValue(Resource.success(users))
         }
         return result
     }
@@ -54,6 +54,61 @@ class UserRepository(private val apiService: ApiService, private val userDao: Us
             }
         } catch (e: Exception) {
             Resource.error("Error fetching user: ${e.message}", null)
+        }
+    }
+
+    suspend fun updateUser(user: User): Resource<User> = withContext(Dispatchers.IO) {
+        try {
+            // Actualizar en Room
+            userDao.updateUser(user)
+            // Simular actualización en la API
+            val response = apiService.updateUser(user.id, user) // Asumiendo que tu API tiene un endpoint para actualizar
+            if (response.isSuccessful) {
+                Log.d("UserRepository", "API Update simulated: $user")
+            } else {
+                Log.e("UserRepository", "API Update failed: ${response.errorBody()?.string()}")
+            }
+            Resource.success(user)
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Error updating user", e)
+            Resource.error("Update failed: ${e.message}", null)
+        }
+    }
+
+    suspend fun deleteUser(user: User): Resource<User> = withContext(Dispatchers.IO) {
+        try {
+            // Actualizar en Room
+            userDao.deleteUser(user)
+
+
+            val response = apiService.updateUser(user.id, user) // Asumiendo que tu API tiene un endpoint para actualizar
+            if (response.isSuccessful) {
+                Log.d("UserRepository", "API Update simulated: $user")
+            } else {
+                Log.e("UserRepository", "API Update failed: ${response.errorBody()?.string()}")
+            }
+            Resource.success(user)
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Error updating user", e)
+            Resource.error("Update failed: ${e.message}", null)
+        }
+    }
+    suspend fun createuser(user: User): Resource<User> = withContext(Dispatchers.IO) {
+        try {
+            // Actualizar en Room
+            userDao.deleteUser(user)
+
+
+            val response = apiService.updateUser(user.id, user) // Asumiendo que tu API tiene un endpoint para actualizar
+            if (response.isSuccessful) {
+                Log.d("UserRepository", "API Update simulated: $user")
+            } else {
+                Log.e("UserRepository", "API Update failed: ${response.errorBody()?.string()}")
+            }
+            Resource.success(user)
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Error updating user", e)
+            Resource.error("Update failed: ${e.message}", null)
         }
     }
 }

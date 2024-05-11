@@ -1,6 +1,7 @@
 package com.hevaz.pruebagruposal.ui.viewmodel.CRUD
 
  import androidx.lifecycle.LiveData
+ import androidx.lifecycle.MediatorLiveData
  import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
  import androidx.lifecycle.ViewModelProvider
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
  import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
  import androidx.lifecycle.liveData
+ import com.hevaz.pruebagruposal.data.local.User
  import com.hevaz.pruebagruposal.data.model.CRUD.UserDetail
  import com.hevaz.pruebagruposal.data.repository.AuthRepository
  import com.hevaz.pruebagruposal.data.repository.UserRepository
@@ -17,6 +19,35 @@ import kotlinx.coroutines.launch
 
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
+
+    private val _userData = MutableLiveData<Resource<User>>()
+    val userData: LiveData<Resource<User>> = _userData
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>> = _users
+
+    private val _filteredUsers = MediatorLiveData<List<User>>()
+    val filteredUsers: LiveData<List<User>> = _filteredUsers
+    private val _searchQuery = MutableLiveData<String>()
+
+    init {
+        _filteredUsers.addSource(users) { filterUsers(_searchQuery.value ?: "") }
+    }
+    fun filterUsers(query: String) {
+        _searchQuery.value = query
+        val filteredList = users.value?.filter {
+            it.first_name.contains(query, ignoreCase = true) ||
+                    it.last_name.contains(query, ignoreCase = true)
+        }
+        _filteredUsers.postValue(filteredList ?: emptyList())
+    }
+    fun fetchUsers(page: Int): LiveData<Resource<List<User>>> = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val result = userRepository.fetchUsers(page)
+        emitSource(result)
+
+
+    }
+
     fun getUsers(page: Int) = liveData {
         emit(Resource.loading(null))
         try {
@@ -37,6 +68,33 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
             result.value = userRepository.getUserDetails(userId)
         }
         return result
+    }
+
+
+    // Función para actualizar un usuario en la base de datos local
+
+    fun updateUser(user: User) = viewModelScope.launch {
+        _userData.postValue(Resource.loading())
+        val result = userRepository.updateUser(user)
+        _userData.postValue(result)
+    }
+
+
+
+
+    // Función para eliminar un usuario de la base de datos local
+
+    fun deleteUser(user: User) = viewModelScope.launch {
+        val result = userRepository.deleteUser(user)
+        if (result.status == Resource.Status.SUCCESS) {
+            fetchUsers(1)  // Recargar los usuarios después de borrar
+        }
+    }
+    // Función para agregar un nuevo usuario a la base de datos local
+    fun addUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+         //   userRepository.addUser(user)
+        }
     }
 
 

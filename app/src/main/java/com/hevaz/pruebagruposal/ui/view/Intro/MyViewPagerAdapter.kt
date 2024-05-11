@@ -30,22 +30,22 @@ class MyViewPagerAdapter : RecyclerView.Adapter<MyViewPagerAdapter.MyViewPagerVi
     override fun onBindViewHolder(holder: MyViewPagerViewHolder, position: Int) {
         when (position) {
             0 -> {
-                holder.animacionLottie.setAnimation(R.raw.asd)
-                holder.textViewPage.text = "CREA UN HABITO"
+                holder.animacionLottie.setAnimation(R.raw.animation)
+                holder.textViewPage.text = "Prueba tecnica Android"
 
-                holder.descriptiona.text = "El aprendizaje es un proceso continuo, siempre hay algo nuevo que descubrir y aprender. \n¡No dejes de lado la oportunidad de seguir creciendo!"
+                holder.descriptiona.text =  "Presentada por el Ing. Kevin Hernandez"
 
             }
             1 -> {
-                holder.animacionLottie.setAnimation(R.raw.book)
-                holder.textViewPage.text = "EXPLORA NUEVAS HABILIDADES"
-                holder.descriptiona.text = "Diversas cursos y diplomados para diversas ciencias, todas las ramas de la educación en una misma app."
+                holder.animacionLottie.setAnimation(R.raw.developer)
+                holder.textViewPage.text = "Bienvenido"
+                holder.descriptiona.text = "Realiza una consulta a la api Reqres.in y guarda los datos en Room, además de diversas funciones tambien.\n"
 
             }
             else -> {
-                holder.animacionLottie.setAnimation(R.raw.capacitate)
-                holder.textViewPage.text = "¡AYUDA A TU YO DEL FUTURO!"
-                holder.descriptiona.text = "El éxito no llega de la noche a la mañana. \nEs el resultado del trabajo duro, la dedicación y la perseverancia"
+                holder.animacionLottie.setAnimation(R.raw.android)
+                holder.textViewPage.text = "Busqueda, CRUD y consumo de datos"
+                holder.descriptiona.text = "El éxito no llega de la noche a la mañana. \nEs el resultado del trabajo duro, la dedicación y la perseverancia."
 
             }
         }

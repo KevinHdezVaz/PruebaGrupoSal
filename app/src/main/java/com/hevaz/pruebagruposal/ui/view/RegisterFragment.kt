@@ -15,6 +15,8 @@ import com.hevaz.pruebagruposal.ui.viewmodel.Registro.AuthViewModel
 import com.hevaz.pruebagruposal.utils.Resource
 import com.hevaz.pruebagruposal.utils.animacionProgress.Companion.esconderCarga
 import com.hevaz.pruebagruposal.utils.animacionProgress.Companion.mostrarCarga
+import com.hevaz.pruebagruposal.utils.saveAuthToken
+import com.hevaz.pruebagruposal.utils.saveName
 import com.hevaz.pruebagruposal.utils.validateRegisterSignUp.Companion.validateEmail
 import com.hevaz.pruebagruposal.utils.validateRegisterSignUp.Companion.validateForm
 import com.hevaz.pruebagruposal.utils.validateRegisterSignUp.Companion.validatePassword
@@ -96,6 +98,17 @@ class RegisterFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    result.data?.token?.let {
+                        requireContext().saveAuthToken(it)
+                        requireContext().saveName(email)
+
+
+                        Toast.makeText(
+                            requireContext(),
+                            " Token guardado: ${it}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
                 }
 

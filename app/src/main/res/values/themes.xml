@@ -1,8 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PruebaGrupoSal" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PruebaGrupoSal" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item> <!-- Asegúrate de que este color es el que quieres. -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+
     </style>
 
     <style name="Theme.PruebaGrupoSal" parent="Base.Theme.PruebaGrupoSal" />

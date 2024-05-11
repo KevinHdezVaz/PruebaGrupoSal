@@ -67,6 +67,11 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeScreen_to_editScreen"
+            app:destination="@id/editScreen" />
+
+
     </fragment>
 
 
@@ -81,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"
-        android:name="com.hevaz.pruebagruposal.ui.view.CRUD.UserDetailsFragment"
+        android:name="com.hevaz.pruebagruposal.ui.view.CRUD.DetailsFragment"
         android:label="UserDetailsFragment">
 
     <argument
@@ -91,6 +96,18 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/editScreen"
+        android:name="com.hevaz.pruebagruposal.ui.view.CRUD.EditScreen"
+        android:label="EditScreen">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchScreen"
+        android:name="com.hevaz.pruebagruposal.ui.view.CRUD.SearchScreen"
+        android:label="SearchScreen" />
 
 
 </navigation>

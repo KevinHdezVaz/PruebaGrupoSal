@@ -18,6 +18,7 @@ import com.hevaz.pruebagruposal.utils.getAuthToken
 import com.hevaz.pruebagruposal.utils.hideKeyboard
 import com.hevaz.pruebagruposal.utils.saveAuthToken
 import com.hevaz.pruebagruposal.utils.saveName
+import com.hevaz.pruebagruposal.utils.saveUserData
 
 
 class LoginFragment : Fragment() {
@@ -114,6 +115,8 @@ class LoginFragment : Fragment() {
 
                 Resource.Status.SUCCESS -> {
                     animacionProgress.esconderCarga()
+
+
 
                     //guardar token
                     result.data?.token?.let {

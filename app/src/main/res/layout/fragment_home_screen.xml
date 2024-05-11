@@ -5,27 +5,30 @@
     android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        app:titleTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
+        android:background="@color/colorPrimaryDark">
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.SearchView
-        android:layout_marginTop="20dp"
-        android:id="@+id/searchView"
-        android:layout_below="@id/toolbar"
-        android:layout_width="match_parent"
-
-        android:layout_margin="20dp"
-        android:background="@drawable/searchview_backgound"
-        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUsers"
-        android:layout_below="@id/searchView"
-        android:layout_width="match_parent"
+        android:layout_below="@id/toolbar"
+    android:layout_marginHorizontal="10dp"
+         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+        android:src="@drawable/dsa"
+        android:layout_margin="30dp"
+
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 </RelativeLayout>

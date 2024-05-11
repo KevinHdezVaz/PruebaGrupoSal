@@ -36,6 +36,7 @@ class InicioSesionActivity : AppCompatActivity() {
 
         setupSmoothBottomMenu()
         observeDestinationChange()
+     Room.databaseBuilder(this, AppDatabase::class.java, "users").allowMainThreadQueries().build()
 
 
     }
